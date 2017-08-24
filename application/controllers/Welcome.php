@@ -19,7 +19,6 @@ class Welcome extends CI_Controller {
       echo json_encode($data);
    }
 
-
 	/**
 	 * Index Page for this controller.
 	 *
