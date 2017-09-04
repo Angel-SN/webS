@@ -18,6 +18,16 @@ class Acciones extends CI_Controller
         echo json_encode($data);
     }
 
+    public function getposicion()
+    {
+        $_POST = json_decode(file_get_contents("php://input"), true);
+        $latitud = $this->input->post('lat');
+        $longitud = $this->input->post('long');
+        $data = $this->RegistroUsuario->insertarPosicion($latitud, $longitud);
+        header('Content-Type: application/json');
+        echo json_encode($data);
+    }
+
     public function registro()
     {
         $_POST = json_decode(file_get_contents("php://input"), true);
@@ -32,10 +42,10 @@ class Acciones extends CI_Controller
             $macAddress = $this->input->post('MacAddress');
             $numCuenta = $this->input->post('NumCuenta');
             $modelo = $this->input->post('Model');
-            $data = array('flag' => true , 'mensaje' =>'Datos insertados correctamente' );
-            $data2 = $this->RegistroUsuario->registro($macAddress, $numCuenta, $modelo);
+            $reg = $this->RegistroUsuario->registro($macAddress, $numCuenta, $modelo);
+            $data = ($reg) ? array('flag' => true , 'mensaje' =>'Datos insertados correctamente' ) : array('flag' => false , 'mensaje' =>'error' );
             header('Content-Type: application/json');
-            echo json_encode(array_merge($data, $data2));
+            echo json_encode($data);
         }
     }
 
@@ -54,24 +64,23 @@ class Acciones extends CI_Controller
         }
     }
 
-    public function inicioSesion()
+    public function inicioSesion($MacAddress, $NumCuenta)
     {
-        $_POST = json_decode(file_get_contents("php://input"), true);
+        $in = array(
+            'MacAddress' => $MacAddress,
+            'NumCuenta' => $NumCuenta
+        );
+        $this->form_validation->set_data($in);
         $this->form_validation->set_rules('MacAddress', 'Dirrecion Mac', 'required');
         $this->form_validation->set_rules('NumCuenta', 'Numero de cuenta', 'required|numeric');
-        $this->form_validation->set_rules('Fecha', 'Fecha', 'required');
         if ($this->form_validation->run() == false) {
             $data = array('flag' => false);
             header('Content-Type: application/json');
             echo json_encode(array_merge($data, $this->form_validation->error_array()));
         } else {
-            $macAddress = $this->input->post('MacAddress');
-            $numCuenta = $this->input->post('NumCuenta');
-            $modelo = $this->input->post('Model');
-            $data = array('flag' => true , 'mensaje' =>'Datos insertados correctamente' );
-            $data2 = $this->RegistroUsuario->registro($macAddress, $numCuenta, $modelo);
+            $data = $this->RegistroUsuario->inicio($MacAddress, $NumCuenta);
             header('Content-Type: application/json');
-            echo json_encode(array_merge($data, $data2));
+            echo json_encode($data);
         }
     }
 }
