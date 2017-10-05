@@ -15,7 +15,7 @@ class Manejo_DB extends CI_Model
         return $hoy["year"]."-".$hoy["mon"]."-".$hoy["mday"];
     }
 
-    private function insertarUsuario($numero_cuenta, $estado='activo')
+    private function insertarUsuario($numero_cuenta, $estado='Activo')
     {
         $datosUsuario = array('numero_cuenta' => $numero_cuenta,'estado'  => $estado);
         $dat = $this->db->insert('usuario', $datosUsuario);
@@ -26,7 +26,7 @@ class Manejo_DB extends CI_Model
         }
     }
 
-    private function insertarDispositivo($mac, $modelo, $estado='activo')
+    private function insertarDispositivo($mac, $modelo, $estado='Activo')
     {
         $datosDispositivos = array(
             'mac' => $mac,
@@ -62,7 +62,7 @@ class Manejo_DB extends CI_Model
             'usuario_idusuario' => $idU,
             'dispositivo_iddispositivo' => $idD,
             'fecha' => $this->obtenerFecha(),
-            'estado' => 'inactivo',
+            'estado' => 'Inactivo',
             'posicion_idposicion' => $idP
         );
         $dat = $this->db->insert('sesion', $datosRelacion);
@@ -113,7 +113,7 @@ class Manejo_DB extends CI_Model
             );
             $data = array(
                 'fecha' => $this->obtenerFecha(),
-                'estado' => 'activo'
+                'estado' => 'Activo'
             );
             $this->db->where('idsesion', $query->row()->idsesion);
             $this->db->update('sesion', $data);
@@ -135,7 +135,7 @@ class Manejo_DB extends CI_Model
                 'mensaje' => 'Fin de Sesion'
             );
             $data = array(
-                'estado' => 'inactivo'
+                'estado' => 'Inactivo'
             );
             $this->db->where('idsesion', $query->row()->idsesion);
             $this->db->update('sesion', $data);

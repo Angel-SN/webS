@@ -13,7 +13,7 @@
             <h2>No. <?php echo $numero_cuenta;?></h2>
         </header>
         <div class="info">
-            <h3>Ultima actializacion</h3>
+            <h3>Ultima actualización</h3>
             <p><?php echo $fecha;?></p>
             <h3>Dispositivo</h3>
             <p><?php echo $modelo;?> <br/> <?php echo $mac;?></p>
@@ -22,12 +22,11 @@
             <br/>
             <?php
                 if($latitud !=null && $longitud != null){
-                    echo "<h3>posicion</h3>";
-                    echo "<p> $latitud , $longitud </p>";
+                    echo "<h3>Posición</h3>";
+                    echo "<p> $latitud,$longitud </p>";
                 }
             ?>
         </div>
-
     </div>
     <div class="mapcont" id="mapcont">
         <div id="map"></div>
